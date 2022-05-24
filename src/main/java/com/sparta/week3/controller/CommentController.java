@@ -22,8 +22,14 @@ public class CommentController {
     }
 
     @GetMapping("/api/comments")
-    public List<Comment> getMemos() {
+    public List<Comment> getComment() {
         return commentRepository.findAllByOrderByModifiedAtDesc();
+    }
+
+    @PutMapping("/api/comments/{id}")
+    public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
+        commentService.update(id, requestDto);
+        return id;
     }
 
     @DeleteMapping("/api/comments/{id}")
