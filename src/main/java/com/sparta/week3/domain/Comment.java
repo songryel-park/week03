@@ -14,23 +14,35 @@ public class Comment extends Timestamped { // 생성,수정 시간을 자동으�
     private Long id;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String contents;
 
-    public Comment(String username, String contents) {
+    @Column(nullable = false)
+    private String password;
+
+    public Comment(String title, String username, String contents, String password) {
+        this.title = title;
         this.username = username;
         this.contents = contents;
+        this.password = password;
     }
 
     public Comment(CommentRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.password = requestDto.getPassword();
     }
 
     public void update(CommentRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
+        this.password = requestDto.getPassword();
     }
 }
