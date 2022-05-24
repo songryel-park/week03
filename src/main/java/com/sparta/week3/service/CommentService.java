@@ -19,7 +19,22 @@ public class CommentService {
         Comment ment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
+        if(ment.getPassword() == requestDto.getPassword()) {
+
+        }
         ment.update(requestDto);
+        return ment.getId();
+    }
+
+    @Transactional
+    public Long delete(Long id, CommentRequestDto requestDto) {
+        Comment ment = commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
+        );
+        if(ment.getPassword() == requestDto.getPassword()) {
+
+        }
+        ment.delete(requestDto);
         return ment.getId();
     }
 }
