@@ -24,12 +24,12 @@ public class Comment extends Timestamped { // 생성,수정 시간을 자동으�
         this.contents = contents;
     }
 
-    public Comment(MemoRequestDto requestDto) {
+    public Comment(CommentRequestDto requestDto) {
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
 
-    public void update(MemoRequestDto requestDto) {
+    public void update(CommentRequestDto requestDto) {
         this.username = requestDto.getUsername();
         this.contents = requestDto.getContents();
     }
