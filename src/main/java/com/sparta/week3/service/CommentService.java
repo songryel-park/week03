@@ -20,9 +20,8 @@ public class CommentService {
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         if(ment.getPassword() == requestDto.getPassword()) {
-
+            ment.update(requestDto);
         }
-        ment.update(requestDto);
         return ment.getId();
     }
 
@@ -32,9 +31,8 @@ public class CommentService {
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         if(ment.getPassword() == requestDto.getPassword()) {
-
+            ment.delete(requestDto);
         }
-        ment.delete(requestDto);
         return ment.getId();
     }
 }
