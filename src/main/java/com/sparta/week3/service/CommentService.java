@@ -32,7 +32,7 @@ public class CommentService {
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         if(ment.getPassword().equals(requestDto.getPassword())) {
-            ment.delete(requestDto);
+            commentRepository.deleteById(id);
             return true;
         }
         return false;
