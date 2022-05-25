@@ -11,5 +11,4 @@ public class Week3Application {
     public static void main(String[] args) {
         SpringApplication.run(Week3Application.class, args);
     }
-
 }
