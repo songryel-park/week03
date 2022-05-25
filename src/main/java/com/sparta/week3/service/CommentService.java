@@ -19,7 +19,7 @@ public class CommentService {
         Comment ment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
-        if(ment.getPassword() == requestDto.getPassword()) {
+        if(ment.getPassword().equals(requestDto.getPassword())) {
             ment.update(requestDto);
             return true;
         }
@@ -31,7 +31,7 @@ public class CommentService {
         Comment ment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
-        if(ment.getPassword() == requestDto.getPassword()) {
+        if(ment.getPassword().equals(requestDto.getPassword())) {
             ment.delete(requestDto);
             return true;
         }
