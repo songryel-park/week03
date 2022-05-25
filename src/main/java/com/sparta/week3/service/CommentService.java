@@ -15,24 +15,26 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Long update(Long id, CommentRequestDto requestDto) {
+    public boolean update(Long id, CommentRequestDto requestDto) {
         Comment ment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         if(ment.getPassword() == requestDto.getPassword()) {
             ment.update(requestDto);
+            return true;
         }
-        return ment.getId();
+        return false;
     }
 
     @Transactional
-    public Long delete(Long id, CommentRequestDto requestDto) {
+    public boolean delete(Long id, CommentRequestDto requestDto) {
         Comment ment = commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         if(ment.getPassword() == requestDto.getPassword()) {
             ment.delete(requestDto);
+            return true;
         }
-        return ment.getId();
+        return false;
     }
 }

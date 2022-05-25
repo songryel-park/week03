@@ -27,14 +27,12 @@ public class CommentController {
     }
 
     @PutMapping("/api/comments/{id}")
-    public Long updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
-        commentService.update(id, requestDto);
-        return id;
+    public boolean updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
+        return commentService.update(id, requestDto);
     }
 
     @DeleteMapping("/api/comments/{id}")
-    public Long deleteComment(@PathVariable Long id) {
-        commentRepository.deleteById(id);
-        return id;
+    public boolean deleteComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
+        return commentService.delete(id, requestDto);
     }
 }
