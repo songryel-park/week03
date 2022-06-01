@@ -1,48 +1,29 @@
 package com.sparta.week3.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @Getter
+@Setter
 @Entity
-public class Comment extends Timestamped {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class Comment {
+    public Comment() {
+    }
+
+    public Comment(String comment) {
+        this.comment = comment;
+    }
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
+    @ManyToOne(targetEntity = User.class,fetch = FetchType.LAZY)
+    @JoinColumn
+    private User user;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String contents;
-
-    @Column(nullable = false)
-    private String password;
-
-    public Comment(String title, String username, String contents, String password) {
-        this.title = title;
-        this.username = username;
-        this.contents = contents;
-        this.password = password;
-    }
-
-    public Comment(CommentRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
-        this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
-    }
-
-    public void update(CommentRequestDto requestDto) {
-        this.title = requestDto.getTitle();
-        this.username = requestDto.getUsername();
-        this.contents = requestDto.getContents();
-        this.password = requestDto.getPassword();
-    }
+    private String comment;
 }

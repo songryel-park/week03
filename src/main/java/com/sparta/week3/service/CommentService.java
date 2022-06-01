@@ -1,9 +1,13 @@
 package com.sparta.week3.service;
 
 import com.sparta.week3.domain.Comment;
-import com.sparta.week3.domain.CommentRepository;
-import com.sparta.week3.domain.CommentRequestDto;
+import com.sparta.week3.domain.Detail;
+import com.sparta.week3.domain.Notice;
+import com.sparta.week3.repository.CommentRepository;
+import com.sparta.week3.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -11,30 +15,32 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 public class CommentService {
+    @Autowired
+    private CommentRepository crepository;
 
-    private final CommentRepository commentRepository;
+    @Autowired
+    private NoticeRepository nrepository;
 
     @Transactional
-    public boolean update(Long id, CommentRequestDto requestDto) {
-        Comment ment = commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
-        );
-        if(ment.getPassword().equals(requestDto.getPassword())) {
-            ment.update(requestDto);
-            return true;
-        }
-        return false;
+    public void saveComment(long noticeid, String comment){
+        Notice n = nrepository.findById(noticeid).get();
+        Comment c = new Comment(comment);
+        c.setUser(((Detail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
+        n.addComment(c);
+        nrepository.save(n);
     }
 
-    @Transactional
-    public boolean delete(Long id, CommentRequestDto requestDto) {
-        Comment ment = commentRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
-        );
-        if(ment.getPassword().equals(requestDto.getPassword())) {
-            commentRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public void updateComment(long id, String comment){
+        Comment c = crepository.findById(id).get();
+        c.setComment(comment);
+        crepository.save(c);
+    }
+
+    public void deleteComment(long id){
+        Notice n = nrepository.findByContentsId(id);
+        Comment c = crepository.findById(id).get();
+        n.removeComment(c);
+        nrepository.save(n);
+        crepository.delete(c);
     }
 }
