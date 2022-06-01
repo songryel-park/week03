@@ -15,7 +15,7 @@ import java.io.IOException;
 @Component
 public class CustomAccess implements AuthenticationEntryPoint {
     @Override
-    public void comments(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Util.alert(response, "로그인이 필요합니다.", "/login");
     }
 }
