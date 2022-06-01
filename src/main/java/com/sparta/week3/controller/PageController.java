@@ -36,7 +36,7 @@ public class PageController {
     public String toEdit(Model model){
         model.addAttribute("isUpdate",false);
         model.addAttribute("data",new Notice());
-        return "updatepage";
+        return "editpage";
     }
 
     @GetMapping(value="/notice/{id}")
@@ -51,10 +51,10 @@ public class PageController {
         }
         return "notice";
     }
-    @GetMapping(value="/updatepage/{id}")
+    @GetMapping(value="/editpage/{id}")
     public String updatePage(@PathVariable("id") String id, Model model){
         model.addAttribute("data",service.getNoticeById(Long.parseLong(id)).get());
         model.addAttribute("isUpdate",true);
-        return "updatepage";
+        return "editpage";
     }
 }
