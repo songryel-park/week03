@@ -28,6 +28,13 @@ public class NoticeService {
         return repository.findAllByOrderByIdDesc();
     }
 
+    public Notice patchNotice(Notice notice){
+        Notice origin = repository.findById(notice.getId()).get();
+        origin.setContents(notice.getContents());
+        origin.setTitle(notice.getTitle());
+        return repository.save(origin);
+    }
+
     public Notice addComment(long id, Comment comment){
         comment.setUser(((Detail) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser());
         Notice notice = repository.findById(id).get();
